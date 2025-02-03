@@ -30,7 +30,7 @@ class ConnexionTest {
 
 	@Test
 	void getContentRegister() throws Exception{
-		mockMvc.perform(get("/auth/login")).andExpect(status().isOk());
+		mockMvc.perform(get("/auth/register")).andExpect(status().isOk());
 	}
 
 }
