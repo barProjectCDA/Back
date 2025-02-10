@@ -12,5 +12,7 @@ public interface IUserService {
 
     Boolean checkPassword(User user, String rawPassword);
 
-    public void registerUser(User user);
+    void registerUser(User user);
+
+    String authenticateUser(String username, String password);
 }

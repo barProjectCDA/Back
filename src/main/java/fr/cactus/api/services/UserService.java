@@ -35,11 +35,21 @@ public class UserService implements IUserService {
 
     @Override
     public void registerUser(User user){
-        if (userRepository.findByUsername(user.getUsername()) != null) {
-            throw new RuntimeException("Username already use");
-        }
         String hashedPassword = passwordEncoder.encode(user.getPassword());
         user.setPassword(hashedPassword);
         userRepository.save(user);
     }
+
+    @Override
+    public String authenticateUser(String username, String rawPassword) {
+        User user = getUserByUsername(username);
+        if (user == null) {
+            return "User not found";
+        }
+        if (!checkPassword(user, rawPassword)) {
+            return "Password failed";
+        }
+        return null;
+    }
+    
 }
