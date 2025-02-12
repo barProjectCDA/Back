@@ -17,8 +17,8 @@ import lombok.Setter;
 @Table(name = "\"bar_user\"")
 @AllArgsConstructor
 @NoArgsConstructor
-public class User {
-    
+public class Users {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "\"id_bar_user\"")
@@ -27,25 +27,23 @@ public class User {
     @Column(name = "\"firstName\"")
     private String firstName;
 
+    @Column(name = "\"role\"")
+    private boolean isAdmin;
+
     @Column(name = "\"lastName\"")
     private String lastName;
 
     @Column(name = "\"username\"")
     private String username;
 
-    @Column(name = "\"role\"")
-    private boolean role;
-
     @Column(name = "\"password\"")
     private String password;
 
-    public User(String firstName, String lastName, String username, boolean role, String password) {
+    public Users(String firstName, String lastName, String username, boolean isAdmin, String password) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.username = username;
-        this.role = role;
+        this.isAdmin = isAdmin;
         this.password = password;
     }
 }
-
-

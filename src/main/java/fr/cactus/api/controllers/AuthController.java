@@ -11,9 +11,11 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import fr.cactus.api.DTO.LoginRequest;
-import fr.cactus.api.DTO.LoginResponse;
-import fr.cactus.api.models.User;
+import fr.cactus.api.dto.LoginRequest;
+import fr.cactus.api.dto.LoginResponse;
+import fr.cactus.api.dto.Message;
+import fr.cactus.api.dto.RegisterDto;
+import fr.cactus.api.models.Users;
 import fr.cactus.api.services.UserService;
 
 
@@ -26,36 +28,40 @@ public class AuthController {
 
 
     @GetMapping("/login")
-    public List<User> showLogin(){
-        List<User> listUsers = userService.getAllUsers();
+    public List<Users> showLogin(){
+        List<Users> listUsers = userService.getAllUsers();
 
         return listUsers;
     }
 
     @PostMapping("/login")
     public ResponseEntity<?> logIn(@RequestBody LoginRequest loginRequest) {
-    String errorMessage = userService.authenticateUser(loginRequest.getUsername(), loginRequest.getPassword());
-
-    if (errorMessage != null) {
-        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(errorMessage);
-    }
-
-    return ResponseEntity.ok(new LoginResponse(loginRequest.getUsername(), "token"));
-}
-
-
-    @GetMapping("/register")
-    public String showRegister(){
-        return "register";
+        LoginResponse loginResponse = userService.loginUser(loginRequest);
+        if(loginResponse.isAuthenticated()){
+            System.out.println(loginResponse.getToken());
+            return new ResponseEntity<>(new Message("success", "Utilisateur identifié avec succés."), HttpStatus.OK);
+        }
+        else{
+            return new ResponseEntity<>(new Message("error", "Identifiant ou mot de passe incorrect."), HttpStatus.NOT_FOUND);
+        }
     }
 
     @PostMapping("/register")
-    public ResponseEntity<String> registerUser(@RequestBody User user) {
-        try {
-            userService.registerUser(user);
-            return ResponseEntity.status(HttpStatus.CREATED).body("User registered successfully");
-        } catch (RuntimeException e) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
+    public ResponseEntity<Message> registerUser(@RequestBody RegisterDto dto) {
+     
+        boolean auth = userService.registerUser(dto);
+
+        if(auth){
+            return new ResponseEntity<>(new Message("success", "Utilisateur enregistré avec succès."), HttpStatus.OK);
+        }else{
+            return new ResponseEntity<>(new Message("error", "Nom d'utilisateur déjà utilisé."), HttpStatus.BAD_REQUEST);
         }
+     
+        // try {
+        //     userService.registerUser(user);
+        //     return ResponseEntity.status(HttpStatus.CREATED).body("User registered successfully");
+        // } catch (RuntimeException e) {
+        //     return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
+        // }
     }
 }
