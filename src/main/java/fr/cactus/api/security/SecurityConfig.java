@@ -26,26 +26,23 @@ import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 @EnableWebSecurity
 public class SecurityConfig {
 
-    private CustomUserDetailsService userDetailsService;
-    private JwtAuthEntryPoint authEntryPoint;
+    private final CustomUserDetailsService userDetailsService;
+
 
     @Autowired
-    public SecurityConfig(CustomUserDetailsService userDetailsService, JwtAuthEntryPoint authEntryPoint) {
+    public SecurityConfig(CustomUserDetailsService userDetailsService) {
         this.userDetailsService = userDetailsService;
-        this.authEntryPoint = authEntryPoint;
     }
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http.cors(cors -> cors.configurationSource(corsConfigurationSource()))
-                .csrf(csrf -> csrf.disable()) // désactivation de la vérification par défaut des attaques CSRF (pas
-                // grave vu
-                // qu'on va mettre en place un système de jetons)
+                .csrf(csrf -> csrf.disable()) // désactivation de la vérification par défaut des attaques CSRF (pas grave vu qu'on va mettre en place un système de jetons)
                 .authorizeHttpRequests(
                     (authz) -> authz
-                                    .requestMatchers(HttpMethod.OPTIONS,"/**").permitAll()
-                                    .requestMatchers("/api/auth/**").permitAll()
-                                    .requestMatchers("/api/**").authenticated())
+                                    .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
+                                    .requestMatchers("/auth/**").permitAll()
+                                    .requestMatchers("**").authenticated())
                 .sessionManagement(sess -> sess.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authenticationProvider(authenticationProvider())
                 .addFilterBefore(jwtAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class)

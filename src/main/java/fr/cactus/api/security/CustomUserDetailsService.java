@@ -1,8 +1,6 @@
 package fr.cactus.api.security;
 
-import java.util.Collection;
 import java.util.List;
-import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
@@ -19,7 +17,7 @@ import fr.cactus.api.repositories.UserRepository;
 @Service
 public class CustomUserDetailsService implements UserDetailsService {
 
-    private UserRepository userRepository;
+    private final UserRepository userRepository;
 
     @Autowired
     public CustomUserDetailsService(UserRepository userRepository) {
@@ -29,13 +27,10 @@ public class CustomUserDetailsService implements UserDetailsService {
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         Users user = userRepository.findByUsername(username).orElseThrow(() -> new UsernameNotFoundException("username not Found"));
-        GrantedAuthority authority = null;
+        GrantedAuthority authority = new SimpleGrantedAuthority("USER");
         if (user.isAdmin()) {
             authority = new SimpleGrantedAuthority("ADMIN");
-        } else {
-            authority = new SimpleGrantedAuthority("USER");
         }
         return new User(user.getUsername(), user.getPassword(), List.of(authority));
     }
-
 }

@@ -4,12 +4,19 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import fr.cactus.api.dto.LoginRequest;
+import fr.cactus.api.dto.LoginResponse;
 import fr.cactus.api.dto.RegisterDto;
 import fr.cactus.api.models.Users;
 import fr.cactus.api.repositories.UserRepository;
+import fr.cactus.api.security.JwtGenerator;
 
 @Service
 public class UserService implements IUserService {
@@ -19,6 +26,39 @@ public class UserService implements IUserService {
 
     @Autowired
     private PasswordEncoder passwordEncoder;
+
+    @Autowired
+    private AuthenticationManager authenticationManager;
+
+    @Autowired
+    private JwtGenerator jwtGenerator;
+    
+    @Override
+    public boolean registerUser(RegisterDto registerDto){
+        if(userRepository.existsByUsername(registerDto.username())){
+            return false;
+        }
+        Users user = new Users();
+        user.setFirstName(registerDto.firstName());
+        user.setLastName(registerDto.lastName());
+        user.setUsername(registerDto.username());
+        user.setAdmin(registerDto.isAdmin());
+        user.setPassword(passwordEncoder.encode(registerDto.password()));
+
+        userRepository.save(user);
+        return true;
+    }
+ 
+    @Override
+    public LoginResponse loginUser(LoginRequest loginRequest){
+        Authentication authentication = authenticationManager.authenticate(
+            new UsernamePasswordAuthenticationToken(loginRequest.getUsername(), loginRequest.getPassword())
+        );
+        SecurityContextHolder.getContext().setAuthentication(authentication);
+        String token = jwtGenerator.generateToken(authentication);
+        LoginResponse loginResponse = new LoginResponse(authentication.getName(), token, true);
+        return loginResponse;
+    }
     
     @Override
     public List<Users> getAllUsers(){
@@ -35,20 +75,6 @@ public class UserService implements IUserService {
         return passwordEncoder.matches(rawPassword, user.get().getPassword());
     }
 
-    @Override
-    public boolean registerUser(RegisterDto registerDto){
-        if(userRepository.existsByUsername(registerDto.username())){
-            return false;
-        }
-        Users user = new Users();
-        user.setUsername(registerDto.username());
-        user.setPassword(passwordEncoder.encode(registerDto.password()));
-        user.setAdmin(registerDto.isAdmin());
-
-        userRepository.save(user);
-
-    return true;
-    }
 
     @Override
     public String authenticateUser(String username, String rawPassword) {

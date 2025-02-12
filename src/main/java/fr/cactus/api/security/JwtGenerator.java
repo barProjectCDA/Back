@@ -9,7 +9,6 @@ import org.springframework.stereotype.Component;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
-import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
 
@@ -22,10 +21,10 @@ public class JwtGenerator {
         java.util.Date expireDate = new java.util.Date(currentDate.getTime() + SecurityConstants.JWT_EXPIRATION);
 
         String token = Jwts.builder()
-                .setSubject(username)
-                .setIssuedAt(new Date())
-                .setExpiration(expireDate)
-                .signWith(SignatureAlgorithm.HS256, SecurityConstants.JWT_SECRET)
+                .subject(username)
+                .issuedAt(new Date())
+                .expiration(expireDate)
+                .signWith(getSignInKey())
                 .compact();
 
         return token;
@@ -33,8 +32,8 @@ public class JwtGenerator {
 
     public String getUsernameFromJWT(String token) {
         Claims claims = Jwts.parser()
-                .verifyWith(getSignInKey())
-                .build().parseSignedClaims(token).getPayload();
+                            .verifyWith(getSignInKey())
+                            .build().parseSignedClaims(token).getPayload();
 
         return claims.getSubject();
     }
@@ -47,10 +46,12 @@ public class JwtGenerator {
     private boolean isTokenExpired(String token) {
         return extractExpiration(token).before(new Date());
     }
+
     private Date extractExpiration(String token) {
         Claims claims = Jwts.parser()
-        .verifyWith(getSignInKey())
-        .build().parseSignedClaims(token).getPayload();
+                            .verifyWith(getSignInKey())
+                            .build().parseSignedClaims(token).getPayload();
+                            
         return claims.getExpiration();
     }
 

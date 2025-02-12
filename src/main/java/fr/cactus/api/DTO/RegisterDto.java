@@ -1,5 +1,5 @@
 package fr.cactus.api.dto;
 
-public record RegisterDto(String username, String password, boolean isAdmin, String firstName, String lastName) {
+public record RegisterDto(String firstName, String lastName, String username, boolean isAdmin, String password) {
     
 }
