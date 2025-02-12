@@ -1,7 +1,5 @@
 package fr.cactus.api.models;
 
-import com.fasterxml.jackson.annotation.JsonManagedReference;
-
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -39,6 +37,5 @@ public class Product {
 
     @ManyToOne
     @JoinColumn(name = "id_category", nullable = false)
-    @JsonManagedReference
     private Category category;
 }
