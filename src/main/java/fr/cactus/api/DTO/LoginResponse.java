@@ -1,4 +1,4 @@
-package fr.cactus.api.DTO;
+package fr.cactus.api.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

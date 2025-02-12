@@ -1,18 +1,22 @@
 package fr.cactus.api.services;
 
 import java.util.List;
+import java.util.Optional;
 
-import fr.cactus.api.models.User;
+import fr.cactus.api.dto.RegisterDto;
+import fr.cactus.api.models.Users;
 
 public interface IUserService {
     
-    List<User> getAllUsers();
+    List<Users> getAllUsers();
 
-    User getUserByUsername(String username);
+    Optional<Users> findByUsername(String username);
 
-    Boolean checkPassword(User user, String rawPassword);
+    Boolean checkPassword(Optional<Users> user, String rawPassword);
 
-    void registerUser(User user);
+    boolean registerUser(RegisterDto dto);
 
     String authenticateUser(String username, String password);
+
+
 }
