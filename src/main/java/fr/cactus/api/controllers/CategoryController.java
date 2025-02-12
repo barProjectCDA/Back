@@ -16,28 +16,28 @@ import fr.cactus.api.models.Category;
 import fr.cactus.api.services.CategoriesService;
 
 @RestController
-@RequestMapping("/auth")
+@RequestMapping("/category")
 public class CategoryController {
 
     @Autowired
     private CategoriesService categoriesService;
 
-    @GetMapping("/categories")
+    @GetMapping
     public List<Category> getCategories() {
         return categoriesService.getAllCategories();
     }
 
-    @PostMapping("/categories")
+    @PostMapping
     public Category createCategory(@RequestBody Category category) {
         return categoriesService.addCategory(category);
     }
 
-    @DeleteMapping("/categories/{id}")
+    @DeleteMapping("/{id}")
     public void deleteCategory(@PathVariable Long id) {
     categoriesService.deleteCategory(id);
-   }
+    }
 
-   @PutMapping("/categories/{id}")
+    @PutMapping("/{id}")
     public Category updateCategory(@PathVariable Long id, @RequestBody Category category) {
         return categoriesService.updateCategory(id, category);
     }

@@ -39,7 +39,7 @@ public class CategoriesService implements ICategoriesService {
                 .orElseThrow(() -> new RuntimeException("Category not found with id " + id));
 
         // Met à jour les champs de la catégorie
-        category.setName(categoryDetails.getName());
+        category.setName_category(categoryDetails.getName_category());
         category.setCssHexadecimalColor(categoryDetails.getCssHexadecimalColor());
         category.setMainCategory(categoryDetails.getMainCategory());
 

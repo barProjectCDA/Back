@@ -1,6 +1,6 @@
 package fr.cactus.api.models;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -18,25 +18,27 @@ import lombok.Setter;
 @Entity
 @Getter
 @Setter
-@Table(name = "\"category\"")
+@Table(name = "\"product\"")
 @AllArgsConstructor
 @NoArgsConstructor
-public class Category {
+public class Product {
     
     @Id
     @GeneratedValue(strategy=GenerationType.IDENTITY)
-    @Column(name = "\"id_category\"")
-    private Long categoryId;
+    @Column(name = "\"id_product\"")
+    private Long productId;
 
-    @Column(name = "\"name_category\"", nullable = false)
-    private String name_category;
+    @Column(name = "\"name_product\"", nullable = false)
+    private String name;
+
+    @Column(name = "\"price_product\"", nullable = false)
+    private Double price;
 
     @Column(name = "\"css_hexadecimal_color\"")
     private String cssHexadecimalColor;
 
     @ManyToOne
-    @JoinColumn(name = "id_category_1")
-    @JsonBackReference
-    private Category mainCategory;
-
+    @JoinColumn(name = "id_category", nullable = false)
+    @JsonManagedReference
+    private Category category;
 }
