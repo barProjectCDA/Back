@@ -1,5 +1,6 @@
 package fr.cactus.api.dto;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -8,8 +9,10 @@ import lombok.experimental.SuperBuilder;
 @Getter
 @Setter
 @NoArgsConstructor
+@AllArgsConstructor
 @SuperBuilder
-public class LoginResponse extends Response {
-    private String username;
-    private String token;
+public class Response {
+    private String status;
+    private String message;
+
 }
