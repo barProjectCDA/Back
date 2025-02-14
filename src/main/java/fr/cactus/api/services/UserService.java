@@ -7,12 +7,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import fr.cactus.api.dto.LoginRequest;
-import fr.cactus.api.dto.LoginResponse;
 import fr.cactus.api.dto.RegisterDto;
 import fr.cactus.api.models.Users;
 import fr.cactus.api.repositories.UserRepository;
@@ -50,14 +50,13 @@ public class UserService implements IUserService {
     }
  
     @Override
-    public LoginResponse loginUser(LoginRequest loginRequest){
+    public String loginUser(LoginRequest loginRequest) throws AuthenticationException {
         Authentication authentication = authenticationManager.authenticate(
             new UsernamePasswordAuthenticationToken(loginRequest.getUsername(), loginRequest.getPassword())
         );
         SecurityContextHolder.getContext().setAuthentication(authentication);
         String token = jwtGenerator.generateToken(authentication);
-        LoginResponse loginResponse = new LoginResponse(authentication.getName(), token, true);
-        return loginResponse;
+        return token;
     }
     
     @Override

@@ -4,7 +4,6 @@ import java.util.List;
 import java.util.Optional;
 
 import fr.cactus.api.dto.LoginRequest;
-import fr.cactus.api.dto.LoginResponse;
 import fr.cactus.api.dto.RegisterDto;
 import fr.cactus.api.models.Users;
 
@@ -20,7 +19,7 @@ public interface IUserService {
 
     String authenticateUser(String username, String password);
 
-    LoginResponse loginUser(LoginRequest loginRequest);
+    String loginUser(LoginRequest loginRequest);
 
 
 }
