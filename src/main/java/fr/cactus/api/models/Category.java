@@ -1,6 +1,6 @@
 package fr.cactus.api.models;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -36,7 +36,7 @@ public class Category {
 
     @ManyToOne
     @JoinColumn(name = "id_category_1")
-    @JsonBackReference
+    @JsonManagedReference
     private Category mainCategory;
 
 }
