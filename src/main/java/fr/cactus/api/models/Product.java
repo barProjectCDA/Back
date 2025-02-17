@@ -1,5 +1,7 @@
 package fr.cactus.api.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -36,6 +38,7 @@ public class Product {
     private String cssHexadecimalColor;
 
     @ManyToOne
+    @JsonIgnore
     @JoinColumn(name = "id_category", nullable = false)
     private Category category;
 }

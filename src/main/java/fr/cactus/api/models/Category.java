@@ -1,5 +1,10 @@
 package fr.cactus.api.models;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import jakarta.persistence.Column;
@@ -9,6 +14,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -21,6 +27,7 @@ import lombok.Setter;
 @Table(name = "\"category\"")
 @AllArgsConstructor
 @NoArgsConstructor
+@JsonInclude(JsonInclude.Include.NON_EMPTY)
 public class Category {
     
     @Id
@@ -36,7 +43,10 @@ public class Category {
 
     @ManyToOne
     @JoinColumn(name = "id_category_1")
-    @JsonManagedReference
+    @JsonBackReference 
     private Category mainCategory;
 
+    @OneToMany(mappedBy = "mainCategory")
+    @JsonManagedReference 
+    private List<Category> subCategories = new ArrayList<>();
 }

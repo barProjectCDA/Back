@@ -1,11 +1,13 @@
 package fr.cactus.api.services;
 
 import java.util.List;
+import java.util.Locale;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import fr.cactus.api.models.Category;
 import fr.cactus.api.models.Product;
 import fr.cactus.api.repositories.ProductRepository;
 
@@ -18,6 +20,10 @@ public class ProductService implements IProductService {
     @Override
     public List<Product> getAllProducts(){
         return productRepository.findAll();
+    }
+    @Override
+    public List<Product>getProductByCategory(Category category){
+        return productRepository.findByCategory(category);
     }
 
     @Override

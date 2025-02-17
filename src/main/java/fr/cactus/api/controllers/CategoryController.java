@@ -17,15 +17,18 @@ import fr.cactus.api.services.CategoriesService;
 
 @RestController
 @RequestMapping("/category")
+
 public class CategoryController {
 
     @Autowired
     private CategoriesService categoriesService;
 
+    
     @GetMapping
     public List<Category> getCategories() {
-        return categoriesService.getAllCategories();
+        return categoriesService.getCategoriesWithSubCat();
     }
+
     
     @PostMapping
     public Category createCategory(@RequestBody Category category) {
