@@ -1,7 +1,6 @@
 package fr.cactus.api.services;
 
 import java.util.List;
-import java.util.Locale;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;

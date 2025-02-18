@@ -30,9 +30,8 @@ public class ProductController {
     @Autowired
     CategoriesService categoriesService;
 
-    
     @GetMapping
-    public List<Product> getAllProducts(){
+    public List<Product> getAllProducts() {
         return productService.getAllProducts();
     }
 
@@ -43,18 +42,17 @@ public class ProductController {
     }
 
     @PostMapping
-    public void createProduct(@RequestBody Product product){
+    public void createProduct(@RequestBody Product product) {
         productService.createProduct(product);
     }
 
-
     @GetMapping("/{id}")
-    public ResponseEntity<?> getProductById(@PathVariable Long id){
+    public ResponseEntity<?> getProductById(@PathVariable Long id) {
 
         Optional<Product> optionalProduct = productService.getProductById(id);
 
         if (optionalProduct.isPresent()) {
-            return new ResponseEntity<>(optionalProduct.get(), HttpStatus.OK) ;
+            return new ResponseEntity<>(optionalProduct.get(), HttpStatus.OK);
         }
 
         return new ResponseEntity<>(new Response("error", "Identifiant utilisateur non connu."), HttpStatus.NOT_FOUND);

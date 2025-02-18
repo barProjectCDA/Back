@@ -43,6 +43,6 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter{
             return bearerToken.substring(7, bearerToken.length());
 
         }
-        return null; 
+        return null;
     }
 }
