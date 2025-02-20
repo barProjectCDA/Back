@@ -34,7 +34,7 @@ public class Order {
 
     @ManyToOne
     @JoinColumn(name = "\"id_bar_user\"", nullable = false)
-    private Users user;
+    private User user;
 
     @JsonManagedReference
     @OneToMany(mappedBy = "order")
