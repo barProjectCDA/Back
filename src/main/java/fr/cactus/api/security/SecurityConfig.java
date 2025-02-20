@@ -42,6 +42,7 @@ public class SecurityConfig {
                     (authz) -> authz
                                     .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
                                     .requestMatchers("/auth/**").permitAll()
+                                    .requestMatchers("/api/users/**").permitAll()
                                     .requestMatchers("**").authenticated())
                 .sessionManagement(sess -> sess.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authenticationProvider(authenticationProvider())

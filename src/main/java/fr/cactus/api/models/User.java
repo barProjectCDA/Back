@@ -19,12 +19,12 @@ import lombok.Setter;
 @Table(name = "\"bar_user\"")
 @AllArgsConstructor
 @NoArgsConstructor
-public class Users {
+public class User {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "\"id_bar_user\"")
-    private Long userId;
+    private Integer userId;
 
     @Column(name = "\"firstName\"")
     private String firstName;
@@ -40,7 +40,7 @@ public class Users {
     @Column(name = "\"password\"")
     private String password;
 
-    public Users(String firstName, String lastName, String username, boolean isAdmin, String password) {
+    public User(String firstName, String lastName, String username, boolean isAdmin, String password) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.username = username;
