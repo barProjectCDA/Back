@@ -16,7 +16,7 @@ import fr.cactus.api.dto.LoginRequest;
 import fr.cactus.api.dto.LoginResponse;
 import fr.cactus.api.dto.RegisterDto;
 import fr.cactus.api.dto.Response;
-import fr.cactus.api.models.Users;
+import fr.cactus.api.models.User;
 import fr.cactus.api.services.UserService;
 
 @RestController
@@ -27,8 +27,8 @@ public class AuthController {
     private UserService userService;
 
     @GetMapping("/login")
-    public List<Users> showLogin() {
-        List<Users> listUsers = userService.getAllUsers();
+    public List<User> showLogin() {
+        List<User> listUsers = userService.getAllUsers();
 
         return listUsers;
     }
