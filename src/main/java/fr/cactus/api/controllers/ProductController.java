@@ -16,33 +16,43 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import fr.cactus.api.dto.Response;
+import fr.cactus.api.models.Category;
 import fr.cactus.api.models.Product;
+import fr.cactus.api.services.CategoriesService;
 import fr.cactus.api.services.ProductService;
 
 @RestController
-@RequestMapping("product")
+@RequestMapping("/product")
 public class ProductController {
 
     @Autowired
     ProductService productService;
-    
+    @Autowired
+    CategoriesService categoriesService;
+
     @GetMapping
-    public List<Product> getAllProducts(){
+    public List<Product> getAllProducts() {
         return productService.getAllProducts();
     }
 
+    @GetMapping("/category/{categoryId}")
+    public List<Product> getProductsByCategory(@PathVariable Long categoryId) {
+        Category category = categoriesService.findById(categoryId);
+        return productService.getProductByCategory(category);
+    }
+
     @PostMapping
-    public void createProduct(@RequestBody Product product){
+    public void createProduct(@RequestBody Product product) {
         productService.createProduct(product);
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<?> getProductById(@PathVariable Long id){
+    public ResponseEntity<?> getProductById(@PathVariable Long id) {
 
         Optional<Product> optionalProduct = productService.getProductById(id);
 
         if (optionalProduct.isPresent()) {
-            return new ResponseEntity<>(optionalProduct.get(), HttpStatus.OK) ;
+            return new ResponseEntity<>(optionalProduct.get(), HttpStatus.OK);
         }
 
         return new ResponseEntity<>(new Response("error", "Identifiant utilisateur non connu."), HttpStatus.NOT_FOUND);

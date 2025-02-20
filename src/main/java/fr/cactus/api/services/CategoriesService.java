@@ -18,10 +18,19 @@ public class CategoriesService implements ICategoriesService {
     public List<Category> getAllCategories() {
         return categoriesRepository.findAll();
     }
+    @Override
+    public List<Category> getCategoriesWithSubCat(){
+        return categoriesRepository.findByMainCategoryIsNull();
+    }
 
     public Category addCategory(Category category) {
         return categoriesRepository.save(category);
     }
+    @Override
+    public Category findById(Long categoryId) {
+        return categoriesRepository.findById(categoryId).orElseThrow(() -> new RuntimeException("Category not found"));
+    }
+
 
     // Méthode pour supprimer une catégorie
     public void deleteCategory(Long id) {
