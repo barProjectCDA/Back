@@ -8,6 +8,10 @@ import fr.cactus.api.dto.RegisterDto;
 import fr.cactus.api.models.User;
 
 public interface IUserService {
+
+
+    Optional<User> getUserById(Integer id);
+
     
     List<User> getAllUsers();
 
