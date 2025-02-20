@@ -5,15 +5,19 @@ import java.util.Optional;
 
 import fr.cactus.api.dto.LoginRequest;
 import fr.cactus.api.dto.RegisterDto;
-import fr.cactus.api.models.Users;
+import fr.cactus.api.models.User;
 
 public interface IUserService {
+
+
+    Optional<User> getUserById(Integer id);
+
     
-    List<Users> getAllUsers();
+    List<User> getAllUsers();
 
-    Optional<Users> findByUsername(String username);
+    Optional<User> findByUsername(String username);
 
-    Boolean checkPassword(Optional<Users> user, String rawPassword);
+    Boolean checkPassword(Optional<User> user, String rawPassword);
 
     boolean registerUser(RegisterDto dto);
 

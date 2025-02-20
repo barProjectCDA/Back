@@ -14,7 +14,7 @@ import org.springframework.stereotype.Service;
 
 import fr.cactus.api.dto.LoginRequest;
 import fr.cactus.api.dto.RegisterDto;
-import fr.cactus.api.models.Users;
+import fr.cactus.api.models.User;
 import fr.cactus.api.repositories.UserRepository;
 import fr.cactus.api.security.JwtGenerator;
 
@@ -38,7 +38,7 @@ public class UserService implements IUserService {
         if(userRepository.existsByUsername(registerDto.username())){
             return false;
         }
-        Users user = new Users();
+        User user = new User();
         user.setFirstName(registerDto.firstName());
         user.setLastName(registerDto.lastName());
         user.setUsername(registerDto.username());
@@ -60,24 +60,32 @@ public class UserService implements IUserService {
     }
     
     @Override
-    public List<Users> getAllUsers(){
+    public List<User> getAllUsers(){
         return userRepository.findAll();
     }
+    @Override
+    public Optional<User> getUserById(Integer id) {
+       return userRepository.findById(id);
+}   
+
+    
+
+    
 
     @Override
-    public Optional<Users> findByUsername(String username){
+    public Optional<User> findByUsername(String username){
         return userRepository.findByUsername(username);
     }
 
     @Override
-    public Boolean checkPassword(Optional<Users> user, String rawPassword){
+    public Boolean checkPassword(Optional<User> user, String rawPassword){
         return passwordEncoder.matches(rawPassword, user.get().getPassword());
     }
 
 
     @Override
     public String authenticateUser(String username, String rawPassword) {
-        Optional<Users> user = findByUsername(username);
+        Optional<User> user = findByUsername(username);
         if (user == null) {
             return "User not found";
         }
