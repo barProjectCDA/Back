@@ -19,6 +19,11 @@ public class CategoriesService implements ICategoriesService {
         return categoriesRepository.findAll();
     }
 
+    @Override
+    public List<Category> getCategoriesWithSub() {
+        return categoriesRepository.findByMainCategoryIsNull();
+    }
+
     public Category addCategory(Category category) {
         return categoriesRepository.save(category);
     }

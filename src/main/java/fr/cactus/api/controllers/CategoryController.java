@@ -24,7 +24,7 @@ public class CategoryController {
 
     @GetMapping
     public List<Category> getCategories() {
-        return categoriesService.getAllCategories();
+        return categoriesService.getCategoriesWithSub();
     }
     
     @PostMapping
