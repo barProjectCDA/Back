@@ -8,9 +8,11 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import fr.cactus.api.dto.OrderRequestDto;
 import fr.cactus.api.dto.Response;
 import fr.cactus.api.models.Order;
 import fr.cactus.api.services.OrderService;
@@ -24,19 +26,22 @@ public class OrderController {
 
     @GetMapping("/{id}")
     public ResponseEntity<?> getOrderById(@PathVariable Long id) {
-        Optional<Order> optionalOrder = orderService.getOrderWithExtras(id);
+
+        Optional<Order> optionalOrder = orderService.getOrderById(id);
 
         if (optionalOrder.isPresent()) {
             return new ResponseEntity<>(optionalOrder.get(), HttpStatus.OK);
         }
-        return new ResponseEntity<>(new Response("error", "Commande inexistante"), HttpStatus.NOT_FOUND);
+
+        return new ResponseEntity<>(new Response("error", "Identifiant utilisateur non connu."), HttpStatus.NOT_FOUND);
     }
-    @PostMapping("/save")
-    public ResponseEntity<?> saveOrder(Order order){
+    
+
+
+    @PostMapping("/create")
+    public ResponseEntity<Order> createOrder(@RequestBody OrderRequestDto request) {
+        Order order = orderService.createOrder(request);
         
-        orderService.makeOrder(order);
-        return new ResponseEntity<>(order, HttpStatus.OK);
-        
-        
+        return ResponseEntity.ok(order);
     }
 }

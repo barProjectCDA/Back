@@ -40,11 +40,7 @@ public class User {
     @Column(name = "\"password\"")
     private String password;
 
-    public User(String firstName, String lastName, String username, boolean isAdmin, String password) {
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.username = username;
-        this.isAdmin = isAdmin;
-        this.password = password;
-    }
+
+
+
 }

@@ -1,6 +1,5 @@
 package fr.cactus.api.models;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
@@ -47,6 +46,7 @@ public class Category {
     private Category mainCategory;
 
     @OneToMany(mappedBy = "mainCategory")
-    @JsonManagedReference 
-    private List<Category> subCategories = new ArrayList<>();
+    @JsonManagedReference
+    private List<Category> subCategories;
+
 }
