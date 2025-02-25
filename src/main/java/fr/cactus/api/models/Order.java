@@ -2,11 +2,10 @@ package fr.cactus.api.models;
 
 import java.util.List;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
-
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -36,21 +35,17 @@ public class Order {
     @JoinColumn(name = "\"id_bar_user\"", nullable = false)
     private User user;
 
-    @JsonManagedReference
-    @OneToMany(mappedBy = "order")
-    private List<OrderProductExtra> orderContent;
-
     @ManyToOne
-    @JsonIgnore
     @JoinColumn(name = "\"id_client_table\"", nullable = false)
     private ClientTable clientTable;
 
-    @JsonIgnore
     @Column(name = "\"price_order\"", nullable = false)
-    private Double priceOrder;
+    private double priceOrder;
 
-    @JsonIgnore
     @Column(name = "\"status_order\"")
     private boolean statusOrder;
+
+    @OneToMany(mappedBy="order",cascade=CascadeType.ALL, fetch = FetchType.LAZY)
+    private List<OrderProductExtra> orderProductExtras;
 
 }

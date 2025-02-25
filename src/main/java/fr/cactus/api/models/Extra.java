@@ -2,8 +2,7 @@ package fr.cactus.api.models;
 
 import java.util.List;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -34,19 +33,18 @@ public class Extra {
     private Long idExtra;
 
 
-    @Column(name= "\"name_extra\"")
-    private String extraName;
-
-    @Column(name= "\"price_extra\"")
-    private Double extraPrice;
-
-    @JsonManagedReference
+    
     @ManyToMany
-    @JsonIgnore
+    @JsonBackReference
     @JoinTable(
-        name = "associated_extra", 
-        joinColumns = @JoinColumn(name = "id_extra"), 
-        inverseJoinColumns = @JoinColumn(name = "id_order_product_extra")
-    )
-    private List<OrderProductExtra> orderProductExtras;
-}
+        name = "\"associated_extra\"",
+        joinColumns = @JoinColumn(name = "\"id_extra\""),
+        inverseJoinColumns = @JoinColumn(name = "\"id_order_product_extra\"")
+        )
+        private List<OrderProductExtra> orderProductExtras;
+        @Column(name= "\"name_extra\"")
+        private String extraName;
+    
+        @Column(name= "\"price_extra\"")
+        private Double extraPrice;
+    }
