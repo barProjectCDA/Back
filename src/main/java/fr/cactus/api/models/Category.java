@@ -1,5 +1,6 @@
 package fr.cactus.api.models;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
@@ -8,7 +9,6 @@ import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
-import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -41,14 +41,12 @@ public class Category {
     @Column(name = "\"css_hexadecimal_color\"")
     private String cssHexadecimalColor;
 
-    // Relation reflexive : Une catégorie peut avoir une catégorie principale (many to one)
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "\"id_category_1\"") // Cette colonne lie la catégorie principale à la catégorie courante
-    @JsonBackReference
+    @ManyToOne
+    @JoinColumn(name = "id_category_1")
+    @JsonBackReference 
     private Category mainCategory;
 
-    // Relation OneToMany pour les sous-catégories
-    @OneToMany(mappedBy = "mainCategory", fetch = FetchType.LAZY)
-    @JsonManagedReference
-    private List<Category> subCategories;
+    @OneToMany(mappedBy = "mainCategory")
+    @JsonManagedReference 
+    private List<Category> subCategories = new ArrayList<>();
 }

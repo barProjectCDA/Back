@@ -13,47 +13,40 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
-import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+
 @Entity
 @Getter
 @Setter
-@Table(name = "\"product\"")
-@AllArgsConstructor
 @NoArgsConstructor
-public class Product {
-    
+@AllArgsConstructor
+@Table(name="\"extra\"")
+public class Extra {
+
     @Id
     @GeneratedValue(strategy=GenerationType.IDENTITY)
-    @Column(name = "\"id_product\"")
-    private Long productId;
-
-    @Column(name = "\"name_product\"", nullable = false)
-    private String name;
-
-    @Column(name = "\"price_product\"", nullable = false)
-    private Double price;
-
-    @Column(name = "\"css_hexadecimal_color\"")
-    private String cssHexadecimalColor;
-
-    @ManyToOne
-    @JsonIgnore
-    @JoinColumn(name = "id_category", nullable = false)
-    private Category category;
+    @Column(name = "\"id_extra\"")
+    private Long idExtra;
 
 
-    @ManyToMany
+    @Column(name= "\"name_extra\"")
+    private String extraName;
+
+    @Column(name= "\"price_extra\"")
+    private Double extraPrice;
+
     @JsonManagedReference
+    @ManyToMany
+    @JsonIgnore
     @JoinTable(
-        name = "product_extra", 
-        joinColumns = @JoinColumn(name = "id_product"), 
-        inverseJoinColumns = @JoinColumn(name = "id_extra")
+        name = "associated_extra", 
+        joinColumns = @JoinColumn(name = "id_extra"), 
+        inverseJoinColumns = @JoinColumn(name = "id_order_product_extra")
     )
-    private List<Extra> extras;
+    private List<OrderProductExtra> orderProductExtras;
 }

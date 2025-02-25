@@ -1,5 +1,7 @@
 package fr.cactus.api.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -26,16 +28,15 @@ public class User {
 
     @Column(name = "\"firstName\"")
     private String firstName;
-
+    @JsonIgnore
     @Column(name = "\"role\"")
     private boolean isAdmin;
 
     @Column(name = "\"lastName\"")
     private String lastName;
-
     @Column(name = "\"username\"")
     private String username;
-
+    @JsonIgnore
     @Column(name = "\"password\"")
     private String password;
 
