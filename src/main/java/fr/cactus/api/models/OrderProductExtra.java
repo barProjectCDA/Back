@@ -3,7 +3,6 @@ package fr.cactus.api.models;
 import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -11,6 +10,7 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
+import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
@@ -47,7 +47,11 @@ public class OrderProductExtra {
     @Column(name = "\"status_order\"")
     private boolean statusOrder;
 
-    @ManyToMany(mappedBy = "orderProductExtras")
-    @JsonManagedReference
+    @ManyToMany
+    @JoinTable(
+            name = "associated_extra",
+            joinColumns = @JoinColumn(name = "id_order_product_extra"),
+            inverseJoinColumns = @JoinColumn(name = "id_extra")
+    )
     private List<Extra> extras;
 }
