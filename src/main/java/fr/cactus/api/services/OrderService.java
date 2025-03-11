@@ -6,8 +6,8 @@ import java.util.Optional;
 
 import org.springframework.stereotype.Service;
 
-import fr.cactus.api.dto.OrderRequestDto;
-import fr.cactus.api.dto.OrderRequestExtraDto;
+import fr.cactus.api.dtos.OrderRequestDto;
+import fr.cactus.api.dtos.OrderRequestExtraDto;
 import fr.cactus.api.models.ClientTable;
 import fr.cactus.api.models.Extra;
 import fr.cactus.api.models.Order;

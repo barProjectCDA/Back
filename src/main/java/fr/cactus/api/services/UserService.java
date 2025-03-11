@@ -12,8 +12,8 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import fr.cactus.api.dto.LoginRequest;
-import fr.cactus.api.dto.RegisterDto;
+import fr.cactus.api.dtos.LoginRequest;
+import fr.cactus.api.dtos.RegisterDto;
 import fr.cactus.api.models.User;
 import fr.cactus.api.repositories.UserRepository;
 import fr.cactus.api.security.JwtGenerator;

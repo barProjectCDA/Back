@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import fr.cactus.api.dto.Response;
+import fr.cactus.api.dtos.Response;
 import fr.cactus.api.models.Category;
 import fr.cactus.api.services.CategoriesService;
 
