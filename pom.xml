@@ -10,7 +10,7 @@
 		<relativePath /> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>fr.cactus</groupId>
-	<artifactId>api</artifactId>
+	<artifactId>cactus-api</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>api</name>
 	<description>projet de gestions pour le bar cactus</description>
@@ -28,7 +28,7 @@
 		<url />
 	</scm>
 	<properties>
-		<java.version>21</java.version>
+		<java.version>17</java.version>
 	</properties>
 	<dependencies>
 		<dependency>

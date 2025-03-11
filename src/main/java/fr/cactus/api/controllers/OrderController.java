@@ -17,7 +17,7 @@ import fr.cactus.api.dto.Response;
 import fr.cactus.api.models.Order;
 import fr.cactus.api.services.OrderService;
 
-@RequestMapping("/order")
+@RequestMapping("/api/order")
 @RestController
 public class OrderController {
 

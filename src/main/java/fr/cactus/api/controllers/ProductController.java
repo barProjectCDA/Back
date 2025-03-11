@@ -22,7 +22,7 @@ import fr.cactus.api.services.CategoriesService;
 import fr.cactus.api.services.ProductService;
 
 @RestController
-@RequestMapping("/product")
+@RequestMapping("/api/product")
 public class ProductController {
 
     @Autowired
