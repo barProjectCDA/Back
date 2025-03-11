@@ -1,0 +1,10 @@
+{
+    "userId": 1,
+    "clientTableId": 1,
+    "orderProductExtras": [
+        {
+            "productId": 3,
+            "extraIds": [2, 8]
+        }
+    ]
+}
