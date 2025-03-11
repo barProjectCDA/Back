@@ -17,7 +17,7 @@ import fr.cactus.api.models.Category;
 import fr.cactus.api.services.CategoriesService;
 
 @RestController
-@RequestMapping("/category")
+@RequestMapping("/api/category")
 
 public class CategoryController {
 

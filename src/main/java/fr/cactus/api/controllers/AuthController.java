@@ -20,7 +20,7 @@ import fr.cactus.api.models.User;
 import fr.cactus.api.services.UserService;
 
 @RestController
-@RequestMapping("/auth")
+@RequestMapping("/api/auth")
 public class AuthController {
 
     @Autowired
