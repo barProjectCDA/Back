@@ -1,4 +1,4 @@
-package fr.cactus.api.dto;
+package fr.cactus.api.dtos;
 
 import java.util.List;
 
